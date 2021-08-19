@@ -1,0 +1,26 @@
+.sign-form-field {
+  display: flex;
+  flex-direction: column;
+  font-size: 10px;
+  line-height: 12px; 
+  margin-bottom: 6px;
+
+  &__label {
+    color: var(--secondaryTextColor);
+  }
+
+  &__input {
+    border: none;
+    border-bottom: 1px solid var(--borderColor);
+    background: none;
+    padding: 5px 0 10px;
+    outline: none;
+    color: #fff;
+    caret-color: var(--borderColor);
+  }
+
+  &__error {
+    color: var(--errorColor);
+    margin: 3px 0;
+  }
+}

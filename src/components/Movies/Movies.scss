@@ -1,0 +1,114 @@
+.movies {
+  padding: 70px 0;
+  padding-bottom: 10px;
+
+  &__card-list {
+    list-style: none;
+    margin: 0;
+    padding: 70px 0 30px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 30px;
+    column-gap: 24px;
+
+    @media  all and (max-width: 1279px) {
+      grid-template-columns: repeat(auto-fill, 339px);
+      row-gap: 36px;
+      column-gap: 30px;
+    }
+  }
+
+  &__card {
+    background-color: var(--cardColor);
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    
+    &-header {
+      display: grid;
+      padding: 14px;
+      gap: 10px;
+      grid-template-areas: 
+      "title button"
+      "duration button";
+      grid-template-columns: 1fr 30px;
+    }
+    
+    &-title {
+      grid-area: title;
+      font-weight: 500;
+      font-size: 15px;
+      line-height: 18px;
+      margin: 0;
+    }
+
+    &-duration {
+      grid-area: duration;
+      font-size: 11px;
+      line-height: 13px;
+      margin: 0;
+      color: var(--secondaryTextColor)
+    }
+
+    &-button {
+      grid-area: button;
+      border: none;
+      border-radius: 50%;
+      background: none;
+      background-color: var(--diagColor);
+      padding: 0;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      cursor: pointer;
+      align-self: center;
+      transition: .3s;
+
+      &:hover {
+        opacity: .8;
+      }
+      
+      &_active {
+        background-color: var(--accentColor);
+      }
+      
+    }
+
+    &-icon {
+      width: 10px;
+      height: 13px;
+      stroke: var(--borderColor);
+      fill: transparent;
+      margin: auto;
+
+
+      &_active {
+        stroke: #fff;
+      }
+
+      &_delete {
+        width: 8px;
+        height: 8px;
+        fill: #fff;
+        stroke: #fff;
+      }
+    }
+
+    &-cover {
+      width: 364px;
+      height: 203px;
+      object-fit: contain;
+
+      @media  all and (max-width: 1279px) {
+        width: 339px;
+        height: 190px;
+      }
+    }
+  }
+
+  &__button {
+    background-color: #2f2f2f;
+    color: #fff;
+    margin-top: 50px;
+  }
+}

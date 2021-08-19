@@ -1,0 +1,34 @@
+.account-button {
+  border: 2px solid #aaa;
+  background: none;
+  color: inherit;
+  padding: 8px 12px;
+  border-radius: 50px;
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: .3s;
+
+  &_active {
+    border-color: #fff;
+  }
+
+  &:hover {
+    cursor: pointer;
+    opacity: .7;
+  }
+
+  &__icon {
+    width: 12px;
+    height: 14px;
+    fill: #fff;
+  }
+
+  @media  all and (max-width: 1023px) {
+    display: none;
+  }
+}

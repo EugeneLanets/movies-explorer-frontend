@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 1140px;
+  padding: 0 70px;
+
+  @media  all and (max-width: 1279px) {
+    width: 92.1875%;
+    padding: 0 3.90625%;
+  }
+}
+
+
