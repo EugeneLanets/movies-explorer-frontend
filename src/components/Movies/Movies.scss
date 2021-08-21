@@ -7,12 +7,12 @@
     margin: 0;
     padding: 70px 0 30px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(339px, 365px));
     row-gap: 30px;
-    column-gap: 24px;
+    justify-content: space-between;
 
     @media  all and (max-width: 1279px) {
-      grid-template-columns: repeat(auto-fill, 339px);
+      grid-template-columns: repeat(auto-fill, minmax(45%, 339px));
       row-gap: 36px;
       column-gap: 30px;
     }
@@ -95,13 +95,14 @@
     }
 
     &-cover {
-      width: 364px;
-      height: 203px;
+      width: 100%;
+      height: auto;
       object-fit: contain;
+      object-position: center center;
 
       @media  all and (max-width: 1279px) {
-        width: 339px;
-        height: 190px;
+        
+        
       }
     }
   }
