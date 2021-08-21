@@ -16,7 +16,12 @@
     padding: 5px 0 10px;
     outline: none;
     color: #fff;
-    caret-color: var(--borderColor);
+    caret-color: #fff;
+
+    &:hover,
+    &:focus {
+      border-color: #fff;
+    }
   }
 
   &__error {

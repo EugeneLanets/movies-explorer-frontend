@@ -13,6 +13,16 @@
     border-bottom: 1px solid var(--borderColor);
     padding-bottom: 13px;
     margin-bottom: 33px;
+    transition: .3s;
+
+    
+    &_focus {
+      border-color: #fff;
+    }
+
+    &:hover {
+      border-color: #fff;
+    }
   }
 
   &__input {
