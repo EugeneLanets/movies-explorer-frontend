@@ -51,6 +51,11 @@
     margin-left: 1em;
     text-decoration: none;
     color: var(--buttonColor);
+    transition: .3s;
+
+    &:hover {
+      opacity: .7;
+    }
   }
 
   &__button {
