@@ -56,7 +56,6 @@
   }
 
   &__filter {
-    margin-left: auto;
     padding-left: 50px;
     position: relative;
     display: flex;
@@ -92,6 +91,7 @@
     }
 
     @media  all and (max-width: 1279px) {
+      margin-left: auto;
       padding-left: 0;
       padding-right: 50px;
 
