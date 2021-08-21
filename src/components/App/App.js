@@ -13,10 +13,9 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
-import Menu from '../Menu/Menu';
 
 const App = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [isMenuOpened, setMenuOpened] = useState(false);
   const location = useLocation().pathname;
   const isSignPage = location === '/signup' || location === '/signin';
@@ -36,6 +35,7 @@ const App = () => {
           menuOpened={isMenuOpened}
           loggedIn={loggedIn}
           isSignPage={isSignPage}
+          isMenuOpen={isMenuOpened}
         />
         )}
       <Switch>
@@ -62,12 +62,6 @@ const App = () => {
         </Route>
         <Redirect to="/404" />
       </Switch>
-      {isMenuOpened && (
-      <Menu
-        onMenuClick={handleMenuOpen}
-        menuOpened={isMenuOpened}
-      />
-      )}
       {!isNotFoundPage && !isSignPage && !isProfilePage && <Footer />}
     </div>
   );

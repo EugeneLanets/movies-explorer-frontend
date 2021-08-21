@@ -14,7 +14,11 @@
   transition: .3s;
 
   &_active {
-    border-color: #fff;
+    border-color: var(--accentColor);
+  }
+
+  &_menu-opened {
+    margin-left: 0;
   }
 
   &:hover {
@@ -26,9 +30,5 @@
     width: 12px;
     height: 14px;
     fill: #fff;
-  }
-
-  @media  all and (max-width: 1023px) {
-    display: none;
   }
 }
