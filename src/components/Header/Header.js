@@ -17,7 +17,7 @@ const Header = ({
     >
       <Logo />
       {!isSignPage && (loggedIn ? <Navigation menuOpened={isMenuOpen} /> : <AuthLinks />) }
-      <MenuButton onClick={onMenuClick} menuOpened={isMenuOpen} />
+      {!isSignPage && loggedIn && <MenuButton onClick={onMenuClick} menuOpened={isMenuOpen} />}
     </div>
   </header>
 );

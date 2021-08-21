@@ -21,6 +21,9 @@ const SearchForm = () => {
           placeholder="Фильм"
           onFocus={() => handleInputFocus(formField, 'search-form__field_focus')}
           onBlur={() => handleInputBlur(formField, 'search-form__field_focus')}
+          required
+          min="2"
+          max="30"
         />
         <button type="submit" className="search-form__submit">Найти</button>
       </label>

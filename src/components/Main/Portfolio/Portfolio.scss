@@ -47,3 +47,16 @@
     }
   }
 }
+
+@media all and (max-width: 1279px) {
+  .portfolio__links-item {
+    font-size: 18px;
+    line-height: 28px;
+    padding-bottom: 19px;
+
+    &:last-of-type {
+      border: none;
+      padding-bottom: 0;
+    }
+  }
+}

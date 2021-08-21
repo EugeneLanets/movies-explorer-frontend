@@ -21,3 +21,16 @@
 
   }
 }
+
+@media all and (max-width:767px) {
+  .nav-tab {
+    &__list {
+      gap:24px;
+    }
+
+    &__link {
+      font-size: 11px;
+    }
+  }
+  
+}

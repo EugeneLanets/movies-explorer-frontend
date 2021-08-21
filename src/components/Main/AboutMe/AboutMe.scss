@@ -2,6 +2,11 @@
   &__inner {
     flex-direction: row;
     justify-content: space-between;
+
+    @media  all and (max-width: 767px) {
+      flex-direction: column-reverse;
+      gap: 40px;
+    }
   }
 
   &__content {
@@ -12,6 +17,10 @@
     @media  all and (max-width: 1279px) {
       width: 53.4124%;
     }
+
+    @media  all and (max-width: 767px) {
+      width: 100%;
+    }
   }
 
   &__title {
@@ -20,6 +29,10 @@
 
   &__paragraph {
     margin-bottom: 20px;
+
+    @media  all and (max-width: 767px) {
+      margin-bottom: 40px;
+    }
   }
 
   &__links {
@@ -39,6 +52,12 @@
     &:hover {
       opacity: .7;
     }
+
+    @media  all and (max-width: 767px) {
+      font-size: 14px;
+      line-height: 17px;
+      font-weight: 500;
+    }
   }
 
   &__photo {
@@ -48,7 +67,10 @@
 
     @media  all and (max-width: 1279px) {
       width: 36%;
-      
+    }
+
+    @media  all and (max-width: 767px) {
+      width: 100%;
     }
   }
 }

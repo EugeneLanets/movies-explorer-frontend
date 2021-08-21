@@ -48,3 +48,30 @@
     font-weight: 500;
   }
 }
+
+@media  all and (max-width: 767px) {
+  .about-project {
+    &__list {
+      flex-direction: column;
+      gap: 56px;
+      margin-bottom: 60px;
+    }
+
+    &__item {
+      width: 100%;
+
+    }
+
+    &__diag-column {
+      font-size: 11px;
+      line-height: 13px;
+      width: 65%; 
+      
+      &_type {
+        &_back {
+          width: 35%;
+        }
+      }
+    }
+  }
+}

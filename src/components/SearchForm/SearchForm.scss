@@ -14,7 +14,7 @@
     padding-bottom: 13px;
     margin-bottom: 33px;
     transition: .3s;
-
+    max-width: 100%;
     
     &_focus {
       border-color: #fff;
@@ -36,6 +36,11 @@
     font-size: 28px;
     line-height: 34px;
     color: var(--secondaryTextColor);
+
+    @media  all and (max-width: 767px) {
+      width: 100px;
+    }
+
   }
 
   &__submit {

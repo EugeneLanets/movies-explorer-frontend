@@ -24,5 +24,13 @@
           var(--pageColor) 33.3%);
         padding: 160px 3.90625% 90px 33.3%;
     }
+
+    @media  all and (max-width: 767px) {
+      &_shown {
+        padding: 144px 18px 46px;
+        background: var(--pageColor);
+      }
+    }
+
   }
 }

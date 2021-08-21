@@ -35,3 +35,27 @@
     }
   }
 }
+
+@media  all and (max-width: 767px) {
+  .footer {
+    padding-bottom: 10px;
+
+    &__about {
+      font-size: 12px;
+      line-height: 15px;
+    }
+
+    &__info {
+      flex-direction: column-reverse;
+      gap: 30px;
+      font-size: 12px;
+      line-height: 15px;
+    }
+
+    &__links {
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+  }
+}

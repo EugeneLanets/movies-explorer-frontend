@@ -7,7 +7,7 @@ const Login = () => (
     <SignForm
       title="Рады видеть!"
       text="Ещё не зарегистрированы?"
-      linkText="Зарегистрироваться"
+      linkText="Регистрация"
       linkTo="/signup"
       buttonText="Войти"
     />

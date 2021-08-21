@@ -16,6 +16,7 @@
   line-height: 20px;
   color: var(--textColor);
   min-height: 100vh;
+  min-width: 320px;
 
   display: flex;
   flex-direction: column;
@@ -23,5 +24,10 @@
   @media  all and (max-width: 1279px) {
     font-size: 12px;
     line-height: 18px;
+  }
+
+  @media  all and (max-width: 767px) {
+    font-size: 11px;
+    line-height: 15px;
   }
 }
