@@ -9,7 +9,7 @@ const ProfileField = ({
     <input
       type={fieldType}
       name={fieldName}
-      value={fieldValue}
+      defaultValue={fieldValue}
       id={fieldId}
       className="profile__input"
       required

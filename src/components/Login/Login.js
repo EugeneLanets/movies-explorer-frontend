@@ -2,7 +2,7 @@ import React from 'react';
 import SignForm from '../SignForm/SignForm';
 import './Login.scss';
 
-const Login = () => (
+const Login = ({ onSubmit }) => (
   <section className="login section section_type_sign">
     <SignForm
       title="Рады видеть!"
@@ -10,6 +10,8 @@ const Login = () => (
       linkText="Регистрация"
       linkTo="/signup"
       buttonText="Войти"
+      onSubmit={onSubmit}
+      formName="login"
     />
   </section>
 );

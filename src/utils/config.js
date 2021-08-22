@@ -1,4 +1,4 @@
 /* eslint-disable import/prefer-default-export */
-const baseUri = 'https://api.mexplorer.nomoredomains.club/';
+const baseUrl = 'https://api.mexplorer.nomoredomains.club';
 
-export { baseUri };
+export { baseUrl };

@@ -4,7 +4,7 @@ import SignFormField from '../SignForm/SignFormField/SignFormField';
 
 import './Register.scss';
 
-const Register = () => (
+const Register = ({ onSubmit }) => (
   <section className="register section section_type_sign">
     <SignForm
       title="Добро пожаловать!"
@@ -12,6 +12,8 @@ const Register = () => (
       linkText="Войти"
       linkTo="/signin"
       buttonText="Зарегистрироваться"
+      onSubmit={onSubmit}
+      formName="register"
     >
       <SignFormField label="Имя" inputType="text" fieldId="name" />
     </SignForm>
