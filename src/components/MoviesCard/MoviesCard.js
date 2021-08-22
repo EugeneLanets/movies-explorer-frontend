@@ -7,7 +7,7 @@ const MoviesCard = ({ saved, cardType }) => {
   const deleteCard = cardType === 'saved';
   const name = '33 слова о дизайне';
   return (
-    <li>
+    <li className="movies__card-list-item">
       <article className="movies__card">
         <header className="movies__card-header">
           <h3 className="movies__card-title">{name}</h3>

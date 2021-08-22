@@ -15,7 +15,7 @@ import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
 
 const App = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [isMenuOpened, setMenuOpened] = useState(false);
   const location = useLocation().pathname;
   const isSignPage = location === '/signup' || location === '/signin';
