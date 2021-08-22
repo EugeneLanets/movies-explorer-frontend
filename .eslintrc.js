@@ -22,6 +22,7 @@ module.exports = {
     'max-len': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
+    'no-underscore-dangle': ['error', { allowAfterThis: true }],
   },
 
 };
