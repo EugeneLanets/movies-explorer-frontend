@@ -1,0 +1,158 @@
+.section {
+  display: flex;
+  flex-grow: 1;
+  padding: 110px 0;
+
+  &_type {
+    &_small {
+      padding: 0;
+    }
+     
+    &_sign {
+      flex-direction: column;
+      padding: 0;
+      align-items: flex-start;
+    }
+  }
+
+  &__heading {
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 27px;
+    letter-spacing: -0.04em;
+    margin: 0;
+    padding-bottom: 23px;
+    margin-bottom: 66px;
+    border-bottom: 1px solid #dadada;
+
+    &_small {
+      border-bottom: none;
+      font-size: 18px;
+      line-height: 20px;
+      color: var(--secondaryTextColor);
+      padding-bottom: 0;
+      margin-bottom: 50px;
+    }
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+    font-size: 50px;
+    line-height: 58px;
+    letter-spacing: -0.04em;
+    margin: 0;
+    margin-bottom: 26px;
+  }
+
+  &__subtitle {
+    margin: 0;
+    margin-bottom: 26px;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.04em;
+  }
+
+  &__lead {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0;
+    margin-bottom: 26px
+  }
+
+  &__paragraph {
+    margin: 0;
+  }
+}
+
+@media  all and (max-width: 1279px) {
+  .section {
+    padding: 90px 0;
+
+    &_type {
+      &_small {
+        padding: 0;
+      }
+       
+      &_sign {
+        flex-direction: column;
+        padding: 0;
+        align-items: flex-start;
+      }
+    }
+
+    &__title {
+      font-size: 40px;
+      line-height: 40px;
+      letter-spacing: -0.04em;
+      margin-bottom: 16px;
+    }
+
+    &__heading {
+      &_small {
+        font-size: 18px;
+        line-height: 20px;
+      }
+    }
+  
+  }
+}
+
+@media  all and (max-width: 767px) {
+  .section {
+    padding: 70px 0;
+
+    &_type {
+      &_small {
+        padding: 0;
+      }
+       
+      &_sign {
+        flex-direction: column;
+        padding: 0;
+        align-items: flex-start;
+      }
+    }
+
+    &__title {
+      font-size: 30px;
+      line-height: 36px;
+      margin-bottom: 24px;
+    }
+
+    &__heading {
+      font-size: 18px;
+      line-height: 22px;
+      padding-bottom: 28px;
+      margin-bottom: 60px;
+
+      &_small {
+        font-size: 14px;
+        line-height: 20px;
+        padding: 0;
+        margin-bottom: 40px;
+      }
+    }
+
+    &__lead {
+      font-size: 11px;
+      line-height: 16px;
+      margin-bottom: 20px;
+    }
+
+    &__subtitle {
+      font-size: 18px;
+      line-height: 22px;
+      margin-bottom: 16px;
+    }
+
+    &__paragraph {
+      font-size: 11px;
+      line-height: 16px;
+    }
+  
+  }
+}

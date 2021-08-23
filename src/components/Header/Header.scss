@@ -1,0 +1,75 @@
+.header {
+  display: flex;
+  padding: 18px 0;
+  z-index: 1;
+
+  &__container {
+    flex-direction: row;
+    align-items: center;
+    gap: 44px;
+
+    &_type_sign {
+      width: var(--signFormWidth);
+      margin-top: 52px;
+
+      @media  all and (max-width: 1279px) {
+        margin-top: 232px;
+      }
+
+      @media  all and (max-width: 767px) {
+        margin-top: 56px;
+        justify-content: center;
+      }
+    }
+  }
+
+  &__logo {
+    width: 38px;
+    height: auto;
+    vertical-align: middle;
+    border-radius: 50%;
+    transition: .3s;
+
+    &:hover {
+      opacity: .7;
+    }
+  }
+
+  &__links {
+    list-style: none;
+    margin: 0;
+    margin-left: auto;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__link-item {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+  }
+
+  &__link {
+    color: inherit;
+    padding: 8px 20px;
+    text-decoration: none;
+    transition: .3s;
+
+    &:hover {
+      opacity: .7;
+    }
+
+    &_accent {
+      color: #000;
+      background-color: var(--accentColor);
+      border-radius: 3px;
+      font-weight: 400;
+    }
+  }
+
+  &__account-button {
+    margin-left: auto;
+  }
+}

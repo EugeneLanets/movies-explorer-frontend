@@ -1,0 +1,37 @@
+.not-found {
+  box-sizing: border-box;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+
+  &__title {
+    font-size: 140px;
+    line-height: 169px;
+    font-weight: 400;
+    margin: 0;
+    margin-top: auto;
+  }
+
+  &__text {
+    font-size: 16px;
+    line-height: 19px;
+    margin: 0;
+    margin-bottom: auto;
+  }
+
+  &__button {
+    border: none;
+    background: none;
+    padding: 0;
+    color: var(--buttonColor);
+    transition: .3s;
+
+    &:hover {
+      opacity: .7;
+      cursor: pointer;
+    } 
+  } 
+}

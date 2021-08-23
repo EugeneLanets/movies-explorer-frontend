@@ -1,0 +1,36 @@
+.navigation {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+   @media  all and (max-width: 1023px) {
+    display: none;
+
+    &_shown {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        linear-gradient(
+          to right, 
+          rgba(0, 0,0, .3) 33.3%, 
+          var(--pageColor) 33.3%);
+        padding: 160px 3.90625% 90px 33.3%;
+    }
+
+    @media  all and (max-width: 767px) {
+      &_shown {
+        padding: 144px 18px 46px;
+        background: var(--pageColor);
+      }
+    }
+
+  }
+}

@@ -1,0 +1,36 @@
+.nav-tab {
+  background-color: var(--secondaryBgColor);
+  display: flex;
+  &__list {
+    list-style: none;
+    margin: 24px auto;
+    padding: 0;
+    display: flex;
+    gap: 40px;
+  }
+  &__link {
+    color: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16px;
+    transition: .3s;
+
+    &:hover {
+      opacity: .7;
+    }
+
+  }
+}
+
+@media all and (max-width:767px) {
+  .nav-tab {
+    &__list {
+      gap:24px;
+    }
+
+    &__link {
+      font-size: 11px;
+    }
+  }
+  
+}
