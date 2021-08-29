@@ -90,5 +90,10 @@
       cursor: pointer;
       opacity: .8;
     }
+
+    &:disabled {
+      opacity: .5;
+      cursor: default;
+    }
   }
 }

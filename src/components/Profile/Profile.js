@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 import './Profile.scss';
@@ -6,6 +6,8 @@ import ProfileField from './ProfileField/ProfileField';
 import ProfileFooter from './ProfileFooter/ProfileFooter';
 
 const Profile = ({ onLogout, onUpdate }) => {
+  const [isEditing, setEditing] = useState(false);
+
   const { name: defaultName, email: defaultEmail } = useContext(CurrentUserContext);
   const handleProfileUpdate = (evt) => {
     evt.preventDefault();
@@ -15,7 +17,17 @@ const Profile = ({ onLogout, onUpdate }) => {
     const email = formData.get('email');
 
     onUpdate({ name, email });
+    setEditing(false);
   };
+
+  const handleProfileEditing = (evt) => {
+    const formData = new FormData(evt.currentTarget);
+    const name = formData.get('name');
+    const email = formData.get('email');
+
+    setEditing(!(name === defaultName && email === defaultEmail));
+  };
+
   return (
     <section className="profile section">
       <h2 className="profile__title">
@@ -29,6 +41,7 @@ const Profile = ({ onLogout, onUpdate }) => {
         className="profile__form"
         name="profile"
         onSubmit={handleProfileUpdate}
+        onChange={handleProfileEditing}
       >
         <ProfileField
           fieldName="name"
@@ -44,7 +57,7 @@ const Profile = ({ onLogout, onUpdate }) => {
           labelName="E-mail"
           fieldValue={defaultEmail}
         />
-        <ProfileFooter onLogout={onLogout} />
+        <ProfileFooter onLogout={onLogout} isEditing={isEditing} />
       </form>
     </section>
   );
