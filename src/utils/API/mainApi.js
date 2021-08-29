@@ -1,4 +1,4 @@
-import { baseUrl } from '../config';
+import { baseUrl, movieCoverPrefix } from '../config';
 
 class Api {
   constructor(baseURL) {
@@ -44,6 +44,56 @@ class Api {
 
   login(credentials) {
     return this._post('signin', credentials);
+  }
+
+  getSavedMovies() {
+    return fetch(`${this._baseURL}/movies/`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+    })
+      .then(this._handleResponse);
+  }
+
+  saveMovie({
+    nameRU,
+    nameEN,
+    id,
+    image,
+    trailerLink,
+    description,
+    duration,
+    country,
+    director,
+    year,
+  }) {
+    const movieToSave = {
+      nameRU,
+      nameEN,
+      movieId: id,
+      image: `${movieCoverPrefix}${image.url}`,
+      thumbnail: `${movieCoverPrefix}${image.formats.thumbnail.url}`,
+      trailer: trailerLink,
+      description,
+      duration,
+      country,
+      director,
+      year,
+    };
+    return this._post('movies', movieToSave);
+  }
+
+  deleteMovie(id) {
+    return fetch(`${this._baseURL}/movies/${id}`, {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+    })
+      .then(this._handleResponse);
   }
 
   logout() {

@@ -2,20 +2,16 @@ import React from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.scss';
 
-const MoviesCardList = () => (
+const MoviesCardList = ({ movies, savedMovies, onMovieSave }) => (
   <ul className="movies__card-list">
-    <MoviesCard saved />
-    <MoviesCard />
-    <MoviesCard saved />
-    <MoviesCard />
-    <MoviesCard />
-    <MoviesCard saved />
-    <MoviesCard />
-    <MoviesCard saved />
-    <MoviesCard />
-    <MoviesCard />
-    <MoviesCard />
-    <MoviesCard />
+    {movies.map((movie) => (
+      <MoviesCard
+        movie={movie}
+        onClick={onMovieSave}
+        key={movie.id}
+        savedMovies={savedMovies}
+      />
+    ))}
   </ul>
 );
 

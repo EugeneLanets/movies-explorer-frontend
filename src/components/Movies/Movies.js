@@ -4,11 +4,15 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Button from '../Button/Button';
 import './Movies.scss';
 
-const Movies = () => (
+const Movies = ({ movies, savedMovies, onMovieSave }) => (
   <section className="movies section">
     <div className="container">
       <SearchForm />
-      <MoviesCardList />
+      <MoviesCardList
+        movies={movies}
+        onMovieButtonClick={onMovieSave}
+        savedMovies={savedMovies}
+      />
       <Button className="movies__button" text="Ещё" />
     </div>
 

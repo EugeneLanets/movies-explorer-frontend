@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 import './App.scss';
 import { useEffect, useState } from 'react';
@@ -17,8 +18,10 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
 import Preloader from '../Preloader/Preloader';
+import ProtectedRoute from '../ProtectedRoute';
 
 import mainApi from '../../utils/API/mainApi';
+import movieApi from '../../utils/API/movieApi';
 
 const App = () => {
   const history = useHistory();
@@ -27,6 +30,8 @@ const App = () => {
   const [isMenuOpened, setMenuOpened] = useState(false);
 
   const [currentUser, setCurrentUser] = useState({});
+  const [movies, setMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
 
   const location = useLocation().pathname;
   const isSignPage = location === '/signup' || location === '/signin';
@@ -92,7 +97,62 @@ const App = () => {
       .catch((err) => { console.log('Error', err); });
   };
 
+  const getMoviesFromRemote = () => {
+    movieApi.get()
+      .then((response) => {
+        setMovies(response);
+        localStorage.setItem('movies', JSON.stringify(response));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const checkLocalStorage = () => {
+    if (localStorage.getItem('movies') === null) {
+      getMoviesFromRemote();
+    } else {
+      setMovies(JSON.parse(localStorage.getItem('movies')));
+    }
+  };
+
+  const getMovies = () => {
+    mainApi.getSavedMovies()
+      .then((response) => {
+        setSavedMovies(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    if (loggedIn) {
+      checkLocalStorage();
+    }
+  };
+
+  const handleToggleMovieSave = (movie, savedMovie) => {
+    if (!savedMovie) {
+      console.log('Save');
+      mainApi.saveMovie(movie)
+        .then((resp) => {
+          setSavedMovies([...savedMovies, resp]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    if (savedMovie) {
+      mainApi.deleteMovie(savedMovie._id)
+        .then((resp) => {
+          setSavedMovies(savedMovies.filter(({ _id }) => _id !== resp._id));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   useEffect(handleCheckToken, [history]);
+  useEffect(getMovies, [loggedIn]);
 
   return (
     <div className="app">
@@ -111,28 +171,49 @@ const App = () => {
           <Route exact path="/">
             <Main />
           </Route>
-          <Route path="/movies">
-            <Movies />
-          </Route>
-          <Route path="/saved-movies">
-            <SavedMovies />
-          </Route>
+
+          <ProtectedRoute
+            exact
+            path="/movies"
+            component={Movies}
+            loggedIn={loggedIn}
+            movies={movies.slice(0, 3)}
+            savedMovies={savedMovies}
+            onMovieSave={handleToggleMovieSave}
+          />
+
+          <ProtectedRoute
+            exact
+            path="/saved-movies"
+            component={SavedMovies}
+            loggedIn={loggedIn}
+            movies={savedMovies}
+            onMovieDelete={handleToggleMovieSave}
+          />
+
+          <ProtectedRoute
+            exact
+            path="/profile"
+            component={Profile}
+            loggedIn={loggedIn}
+            onLogout={handleLogout}
+            onUpdate={handleUpdateUserInfo}
+          />
+
           <Route path="/signup">
             <Register onSubmit={handleRegister} />
           </Route>
           <Route path="/signin">
             <Login onSubmit={handleLogin} />
           </Route>
-          <Route path="/profile">
-            <Profile
-              name="Виталий"
-              onLogout={handleLogout}
-              onUpdate={handleUpdateUserInfo}
-            />
-          </Route>
-          <Route path="/404">
-            <NotFound />
-          </Route>
+
+          <ProtectedRoute
+            exact
+            path="/404"
+            component={NotFound}
+            loggedIn={loggedIn}
+          />
+
           <Redirect to="/404" />
         </Switch>
         {!isNotFoundPage && !isSignPage && !isProfilePage && <Footer />}
