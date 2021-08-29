@@ -130,6 +130,7 @@ const App = () => {
   };
 
   const handleToggleMovieSave = (movie, savedMovie) => {
+    console.log(savedMovie);
     if (!savedMovie) {
       console.log('Save');
       mainApi.saveMovie(movie)

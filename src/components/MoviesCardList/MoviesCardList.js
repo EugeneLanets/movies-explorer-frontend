@@ -2,12 +2,12 @@ import React from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.scss';
 
-const MoviesCardList = ({ movies, savedMovies, onMovieSave }) => (
+const MoviesCardList = ({ movies, savedMovies, onMovieButtonClick }) => (
   <ul className="movies__card-list">
     {movies.map((movie) => (
       <MoviesCard
         movie={movie}
-        onClick={onMovieSave}
+        onClick={onMovieButtonClick}
         key={movie.id}
         savedMovies={savedMovies}
       />
