@@ -9,9 +9,9 @@ import MenuButton from './MenuButton/MenuButton';
 import Navigation from './Navigation/Navigation';
 
 const Header = ({
-  loggedIn, isSignPage, isMenuOpen, onMenuClick,
+  loggedIn, isSignPage, isMenuOpen, onMenuClick, loading,
 }) => (
-  <header className="header">
+  <header className={`header${loading ? 'header_loading' : ''}`}>
     <div
       className={`container header__container ${isSignPage ? 'header__container_type_sign' : ''}`}
     >

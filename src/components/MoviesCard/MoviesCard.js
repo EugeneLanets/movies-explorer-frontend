@@ -10,7 +10,6 @@ const MoviesCard = ({ movie, savedMovies, onClick }) => {
   const isSaved = savedMovie ? false : savedMovies.find(({ movieId }) => movieId === movie.id);
   const prefix = savedMovie ? '' : movieCoverPrefix;
 
-  console.log(onClick);
   const duration = `${Math.floor(movie.duration / 60)}ч ${movie.duration % 60}м`;
 
   const handleMovieSave = (evt) => {

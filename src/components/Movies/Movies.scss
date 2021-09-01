@@ -25,9 +25,9 @@
       row-gap: 16px;
       justify-content: center;
 
-    &-item {
-      display: flex;
-    }
+      &-item {
+        display: flex;
+      }
     }
   }
 
@@ -45,7 +45,6 @@
       text-decoration: none;
       color: inherit;
       display: flex;
-      height: 100%;
 
       &:hover {
         opacity: .8;
@@ -131,6 +130,16 @@
       height: 203px;
       object-fit: cover;
       object-position: top left;
+
+      @media  all and (max-width: 1279px) {
+        width: 339px;
+        height: 190px;
+      }
+
+      @media  all and (max-width: 767px) {
+        width: 300px;
+        height: 168px;
+      }
     }
   }
 

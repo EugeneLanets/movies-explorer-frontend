@@ -1,10 +1,10 @@
 import React from 'react';
 import './Preloader.scss';
 
-const Preloader = () => (
-  <div className="preloader">
+const Preloader = ({ fullscreen }) => (
+  <div className={`preloader${fullscreen ? ' preloader_fullscreen' : ''}`}>
     <div className="preloader__container">
-      <span className="preloader__round" />
+      <div className="preloader__round" />
     </div>
   </div>
 );

@@ -22,16 +22,21 @@ import ProtectedRoute from '../ProtectedRoute';
 
 import mainApi from '../../utils/API/mainApi';
 import movieApi from '../../utils/API/movieApi';
+import { SHORT_MOVIE_DURATION } from '../../utils/constants';
 
 const App = () => {
   const history = useHistory();
 
   const [loggedIn, setLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [isMenuOpened, setMenuOpened] = useState(false);
 
   const [currentUser, setCurrentUser] = useState({});
   const [movies, setMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
+  const [showShorts, setShowShorts] = useState(false);
+  const [movieQuery, setMovieQuery] = useState('');
 
   const location = useLocation().pathname;
   const isSignPage = location === '/signup' || location === '/signin';
@@ -42,13 +47,50 @@ const App = () => {
     setMenuOpened(!isMenuOpened);
   };
 
+  const getMoviesFromRemote = () => {
+    movieApi.get()
+      .then((response) => {
+        setMovies(response);
+        localStorage.setItem('movies', JSON.stringify(response));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const checkLocalStorage = () => {
+    const localMovies = JSON.parse(localStorage.getItem('movies'));
+    const localFiltered = JSON.parse(localStorage.getItem('filteredMovies'));
+    const localQuery = localStorage.getItem('movieQuery');
+    const localShorts = JSON.parse(localStorage.getItem('showShorts'));
+
+    if (!localMovies) {
+      getMoviesFromRemote();
+    } else {
+      setMovies(localMovies);
+    }
+
+    if (localQuery) {
+      setMovieQuery(localQuery);
+      setFilteredMovies(localFiltered);
+      setShowShorts(localShorts);
+    }
+  };
+
   const handleCheckToken = () => {
     mainApi.checkToken()
       .then((incomingUserData) => {
         setCurrentUser(incomingUserData);
         setLoggedIn(true);
+        checkLocalStorage();
+        if (location === '/movies' || location === '/saved-movies' || location === '/profile') {
+          history.push(location);
+        }
       })
-      .catch((err) => { console.log('Error', err); });
+      .catch((err) => { console.log('Error', err); })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const handleLogin = (formData) => {
@@ -57,10 +99,8 @@ const App = () => {
     mainApi.login({
       email, password,
     })
-      .then((res) => {
-        handleCheckToken();
-      })
-      .then(() => {
+      .then(async (res) => {
+        await handleCheckToken();
         history.push('/movies');
       })
       .catch((err) => { console.log('Error', err); });
@@ -84,6 +124,7 @@ const App = () => {
     mainApi.logout()
       .then(() => {
         setLoggedIn(false);
+        setLoading(true);
         history.push('/');
       })
       .catch((err) => { console.log('Error', err); });
@@ -97,26 +138,7 @@ const App = () => {
       .catch((err) => { console.log('Error', err); });
   };
 
-  const getMoviesFromRemote = () => {
-    movieApi.get()
-      .then((response) => {
-        setMovies(response);
-        localStorage.setItem('movies', JSON.stringify(response));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const checkLocalStorage = () => {
-    if (localStorage.getItem('movies') === null) {
-      getMoviesFromRemote();
-    } else {
-      setMovies(JSON.parse(localStorage.getItem('movies')));
-    }
-  };
-
-  const getMovies = () => {
+  const getSavedMovies = () => {
     mainApi.getSavedMovies()
       .then((response) => {
         setSavedMovies(response);
@@ -124,15 +146,11 @@ const App = () => {
       .catch((err) => {
         console.log(err);
       });
-    if (loggedIn) {
-      checkLocalStorage();
-    }
   };
 
   const handleToggleMovieSave = (movie, savedMovie) => {
     console.log(savedMovie);
     if (!savedMovie) {
-      console.log('Save');
       mainApi.saveMovie(movie)
         .then((resp) => {
           setSavedMovies([...savedMovies, resp]);
@@ -152,8 +170,36 @@ const App = () => {
     }
   };
 
-  useEffect(handleCheckToken, [history]);
-  useEffect(getMovies, [loggedIn]);
+  const filterMovies = (moviesList, shorts, query) => moviesList.filter(({ duration, nameEN, nameRU }) => {
+    const filterByDuration = shorts
+      ? duration <= SHORT_MOVIE_DURATION
+      : true;
+    const matchRU = nameRU
+      ? nameRU.toLowerCase().includes(query.toLowerCase())
+      : false;
+    const matchEN = nameEN
+      ? nameEN.toLowerCase().includes(query.toLowerCase())
+      : false;
+    return filterByDuration && (matchRU || matchEN);
+  });
+
+  const handleMoviesSearch = async (searchString) => {
+    const filtered = filterMovies(movies, showShorts, searchString);
+
+    localStorage.setItem('movieQuery', searchString);
+    localStorage.setItem('showShorts', showShorts);
+    localStorage.setItem('filteredMovies', JSON.stringify(filtered));
+
+    setMovieQuery(searchString);
+    setFilteredMovies(filtered);
+  };
+
+  const handleSearchShorts = () => {
+    setShowShorts(!showShorts);
+  };
+
+  useEffect(handleCheckToken, []);
+  useEffect(getSavedMovies, [loggedIn]);
 
   return (
     <div className="app">
@@ -166,40 +212,13 @@ const App = () => {
             loggedIn={loggedIn}
             isSignPage={isSignPage}
             isMenuOpen={isMenuOpened}
+            loading={loading}
           />
           )}
         <Switch>
           <Route exact path="/">
             <Main />
           </Route>
-
-          <ProtectedRoute
-            exact
-            path="/movies"
-            component={Movies}
-            loggedIn={loggedIn}
-            movies={movies.slice(0, 3)}
-            savedMovies={savedMovies}
-            onMovieSave={handleToggleMovieSave}
-          />
-
-          <ProtectedRoute
-            exact
-            path="/saved-movies"
-            component={SavedMovies}
-            loggedIn={loggedIn}
-            movies={savedMovies}
-            onMovieDelete={handleToggleMovieSave}
-          />
-
-          <ProtectedRoute
-            exact
-            path="/profile"
-            component={Profile}
-            loggedIn={loggedIn}
-            onLogout={handleLogout}
-            onUpdate={handleUpdateUserInfo}
-          />
 
           <Route path="/signup">
             <Register onSubmit={handleRegister} />
@@ -210,10 +229,50 @@ const App = () => {
 
           <ProtectedRoute
             exact
+            path="/movies"
+            component={Movies}
+            loggedIn={loggedIn}
+            movies={filteredMovies}
+            savedMovies={savedMovies}
+            onMovieSave={handleToggleMovieSave}
+            onSearch={handleMoviesSearch}
+            showShorts={showShorts}
+            onShortsCheck={handleSearchShorts}
+            query={movieQuery}
+            loading={loading}
+          />
+
+          <ProtectedRoute
+            exact
+            path="/saved-movies"
+            component={SavedMovies}
+            loggedIn={loggedIn}
+            movies={savedMovies}
+            onMovieDelete={handleToggleMovieSave}
+            loading={loading}
+            onSearch={filterMovies}
+          />
+
+          <ProtectedRoute
+            exact
+            path="/profile"
+            component={Profile}
+            loggedIn={loggedIn}
+            onLogout={handleLogout}
+            onUpdate={handleUpdateUserInfo}
+            loading={loading}
+          />
+
+          <ProtectedRoute
+            exact
             path="/404"
             component={NotFound}
             loggedIn={loggedIn}
+            loading={loading}
           />
+          <Route exact path="/preloader">
+            <Preloader fullscreen />
+          </Route>
 
           <Redirect to="/404" />
         </Switch>

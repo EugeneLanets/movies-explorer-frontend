@@ -2,7 +2,9 @@ import React, { useRef } from 'react';
 import FilterCheckbox from './FilterCheckbox/FilterCheckbox';
 import './SearchForm.scss';
 
-const SearchForm = () => {
+const SearchForm = ({
+  onSubmit, showShorts, onShortsCheck, query,
+}) => {
   const formField = useRef();
   const handleInputFocus = (ref, className) => {
     ref.current.classList.add(className);
@@ -11,8 +13,15 @@ const SearchForm = () => {
     ref.current.classList.remove(className);
   };
 
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    const formData = new FormData(evt.target);
+    const searchQuery = formData.get('movie');
+    onSubmit(searchQuery);
+  };
+
   return (
-    <form className="search-form">
+    <form className="search-form" onSubmit={handleSubmit} name="search">
       <label htmlFor="search" className="search-form__field" ref={formField}>
         <input
           id="search"
@@ -24,10 +33,15 @@ const SearchForm = () => {
           required
           min="2"
           max="30"
+          name="movie"
+          defaultValue={query}
         />
         <button type="submit" className="search-form__submit">Найти</button>
       </label>
-      <FilterCheckbox />
+      <FilterCheckbox
+        onChange={onShortsCheck}
+        showShorts={showShorts}
+      />
     </form>
   );
 };
