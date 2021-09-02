@@ -7,7 +7,7 @@ const SignForm = ({
   title, text, linkText, linkTo,
   buttonText, children, formName,
   onSubmit, fieldsValues, fieldsErrors,
-  formValidity, onFieldChange,
+  formValidity, onFieldChange, error,
 }) => (
   <form
     className="sign-form"
@@ -42,6 +42,7 @@ const SignForm = ({
       linkTo={linkTo}
       buttonText={buttonText}
       disabled={!formValidity}
+      error={error}
     />
   </form>
 );

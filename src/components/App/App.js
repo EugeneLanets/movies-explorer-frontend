@@ -23,6 +23,7 @@ import ProtectedRoute from '../ProtectedRoute';
 import mainApi from '../../utils/API/mainApi';
 import movieApi from '../../utils/API/movieApi';
 import { SHORT_MOVIE_DURATION } from '../../utils/constants';
+import useErrors from '../../utils/hooks/useErrors';
 
 const App = () => {
   const history = useHistory();
@@ -30,6 +31,8 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isMenuOpened, setMenuOpened] = useState(false);
+
+  const { errors, addError, removeError } = useErrors();
 
   const [currentUser, setCurrentUser] = useState({});
   const [movies, setMovies] = useState([]);
@@ -106,13 +109,17 @@ const App = () => {
 
   const handleLogin = (values) => {
     setLoading(true);
+    const name = 'login';
+    removeError(name);
     const { email, password } = values;
     mainApi.login({ email, password })
       .then(async (res) => {
         await handleCheckToken();
         history.push('/movies');
       })
-      .catch((err) => { console.log('Error', err); })
+      .catch((err) => {
+        addError(err, name);
+      })
       .finally(() => {
         setLoading(false);
       });
@@ -120,11 +127,15 @@ const App = () => {
 
   const handleRegister = (values) => {
     setLoading(true);
+    const name = 'register';
+    removeError(name);
     mainApi.register(values)
       .then(() => {
         handleLogin(values);
       })
-      .catch((err) => { console.log('Error', err); })
+      .catch((err) => {
+        addError(err, name);
+      })
       .finally(() => {
         setLoading(false);
       });
@@ -246,10 +257,10 @@ const App = () => {
           </Route>
 
           <Route path="/signup">
-            <Register onSubmit={handleRegister} />
+            <Register onSubmit={handleRegister} error={errors?.register} loading={loading} />
           </Route>
           <Route path="/signin">
-            <Login onSubmit={handleLogin} />
+            <Login onSubmit={handleLogin} error={errors?.login} loading={loading} />
           </Route>
 
           <ProtectedRoute

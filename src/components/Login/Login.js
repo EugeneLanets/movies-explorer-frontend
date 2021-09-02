@@ -1,25 +1,25 @@
 import React from 'react';
 import useFormWithValidation from '../../utils/hooks/useFormValidation';
 import SignForm from '../SignForm/SignForm';
+import Preloader from '../Preloader/Preloader';
 import './Login.scss';
 
-const Login = ({ onSubmit }) => {
+const Login = ({ onSubmit, error, loading }) => {
   const {
     values,
     errors,
     isValid,
     handleChange,
-    resetForm,
   } = useFormWithValidation({});
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
     onSubmit(values);
-    resetForm();
   };
 
   return (
     <section className="login section section_type_sign">
+      {loading && <Preloader fullscreen />}
       <SignForm
         title="Рады видеть!"
         text="Ещё не зарегистрированы?"
@@ -32,6 +32,7 @@ const Login = ({ onSubmit }) => {
         fieldsErrors={errors}
         formValidity={isValid}
         onFieldChange={handleChange}
+        error={error}
       />
     </section>
   );

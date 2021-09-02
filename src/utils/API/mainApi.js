@@ -6,12 +6,13 @@ class Api {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  _handleResponse(response) {
+  async _handleResponse(response) {
+    const resp = await response.json();
     if (response.ok) {
-      return response.json();
+      return resp;
     }
 
-    return Promise.reject(new Error(`Ошибка: ${response.status}`));
+    return Promise.reject(resp.message);
   }
 
   checkToken() {
