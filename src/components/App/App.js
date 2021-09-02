@@ -37,7 +37,6 @@ const App = () => {
   const [savedMovies, setSavedMovies] = useState([]);
   const [showShorts, setShowShorts] = useState(false);
   const [movieQuery, setMovieQuery] = useState('');
-  const [moviesPerLine, setMoviesPerLine] = useState(3);
 
   const location = useLocation().pathname;
   const isSignPage = location === '/signup' || location === '/signin';
@@ -266,7 +265,6 @@ const App = () => {
             onShortsCheck={handleSearchShorts}
             query={movieQuery}
             loading={loading}
-            moviesPerLine={moviesPerLine}
           />
 
           <ProtectedRoute

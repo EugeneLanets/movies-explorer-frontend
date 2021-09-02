@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Button from '../Button/Button';
 import './Movies.scss';
 import Preloader from '../Preloader/Preloader';
+import useCurrentWidth from '../../utils/hooks/useCurrentWidth';
 
 const Movies = ({
   movies,
@@ -13,14 +14,18 @@ const Movies = ({
   showShorts,
   onShortsCheck,
   query,
-  moviesPerLine,
 }) => {
-  const [shownMoviesQuantity, setShownMoviesQuantity] = useState(12);
+  const { startCardsQuantity, cardsPerLine } = useCurrentWidth();
+  const [shownMoviesQuantity, setShownMoviesQuantity] = useState(startCardsQuantity);
   const showMore = movies.length > shownMoviesQuantity;
   const handleButtonClick = (evt) => {
     evt.preventDefault();
-    setShownMoviesQuantity(shownMoviesQuantity + moviesPerLine);
+    setShownMoviesQuantity(shownMoviesQuantity + cardsPerLine);
   };
+
+  useEffect(() => {
+    setShownMoviesQuantity(startCardsQuantity);
+  }, [startCardsQuantity]);
 
   return (
     <section className="movies section">
