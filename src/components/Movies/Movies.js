@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Button from '../Button/Button';
@@ -13,33 +13,45 @@ const Movies = ({
   showShorts,
   onShortsCheck,
   query,
-}) => (
-  <section className="movies section">
-    <div className="container">
-      <SearchForm
-        onSubmit={onSearch}
-        showShorts={showShorts}
-        onShortsCheck={onShortsCheck}
-        query={query}
-      />
-      {movies.length === 0 && !query
-        ? <Preloader />
-        : (
-          <MoviesCardList
-            movies={movies}
-            onMovieButtonClick={onMovieSave}
-            savedMovies={savedMovies}
-          />
+  moviesPerLine,
+}) => {
+  const [shownMoviesQuantity, setShownMoviesQuantity] = useState(12);
+  const showMore = movies.length > shownMoviesQuantity;
+  const handleButtonClick = (evt) => {
+    evt.preventDefault();
+    setShownMoviesQuantity(shownMoviesQuantity + moviesPerLine);
+  };
+
+  return (
+    <section className="movies section">
+      <div className="container">
+        <SearchForm
+          onSubmit={onSearch}
+          showShorts={showShorts}
+          onShortsCheck={onShortsCheck}
+          query={query}
+        />
+        {movies.length === 0 && !query
+          ? <Preloader />
+          : (
+            <MoviesCardList
+              movies={movies.slice(0, shownMoviesQuantity)}
+              onMovieButtonClick={onMovieSave}
+              savedMovies={savedMovies}
+            />
+          )}
+        {showMore && (
+        <Button
+          className="movies__button"
+          text="Ещё"
+          onClick={handleButtonClick}
+        />
         )}
-      {false && <Button className="movies__button" text="Ещё" />}
 
-    </div>
+      </div>
 
-  </section>
-);
-
-Movies.propTypes = {};
-
-Movies.defaultProps = {};
+    </section>
+  );
+};
 
 export default Movies;

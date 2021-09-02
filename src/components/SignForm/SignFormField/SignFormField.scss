@@ -2,8 +2,9 @@
   display: flex;
   flex-direction: column;
   font-size: 10px;
-  line-height: 12px; 
+  line-height: 12px;
   margin-bottom: 6px;
+
 
   &__label {
     color: var(--secondaryTextColor);
@@ -27,5 +28,10 @@
   &__error {
     color: var(--errorColor);
     margin: 3px 0;
+    visibility: hidden;
+
+    &_active {
+      visibility: visible;
+    }
   }
 }

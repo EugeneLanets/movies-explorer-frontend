@@ -37,6 +37,7 @@ const App = () => {
   const [savedMovies, setSavedMovies] = useState([]);
   const [showShorts, setShowShorts] = useState(false);
   const [movieQuery, setMovieQuery] = useState('');
+  const [moviesPerLine, setMoviesPerLine] = useState(3);
 
   const location = useLocation().pathname;
   const isSignPage = location === '/signup' || location === '/signin';
@@ -48,6 +49,7 @@ const App = () => {
   };
 
   const getMoviesFromRemote = () => {
+    setLoading(true);
     movieApi.get()
       .then((response) => {
         setMovies(response);
@@ -55,7 +57,26 @@ const App = () => {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
+  };
+
+  const checkMovies = (localMovies) => {
+    if (!localMovies) {
+      getMoviesFromRemote();
+    } else {
+      setMovies(localMovies);
+    }
+  };
+
+  const checkSavedSearch = (query, moviesList, showShortMovies) => {
+    if (query) {
+      setMovieQuery(query);
+      setFilteredMovies(moviesList);
+      setShowShorts(showShortMovies);
+    }
   };
 
   const checkLocalStorage = () => {
@@ -64,22 +85,13 @@ const App = () => {
     const localQuery = localStorage.getItem('movieQuery');
     const localShorts = JSON.parse(localStorage.getItem('showShorts'));
 
-    if (!localMovies) {
-      getMoviesFromRemote();
-    } else {
-      setMovies(localMovies);
-    }
-
-    if (localQuery) {
-      setMovieQuery(localQuery);
-      setFilteredMovies(localFiltered);
-      setShowShorts(localShorts);
-    }
+    checkMovies(localMovies);
+    checkSavedSearch(localQuery, localFiltered, localShorts);
   };
 
   const handleCheckToken = () => {
     mainApi.checkToken()
-      .then((incomingUserData) => {
+      .then(async (incomingUserData) => {
         setCurrentUser(incomingUserData);
         setLoggedIn(true);
         checkLocalStorage();
@@ -93,59 +105,72 @@ const App = () => {
       });
   };
 
-  const handleLogin = (formData) => {
-    const email = formData.get('email');
-    const password = formData.get('password');
-    mainApi.login({
-      email, password,
-    })
+  const handleLogin = (values) => {
+    setLoading(true);
+    const { email, password } = values;
+    mainApi.login({ email, password })
       .then(async (res) => {
         await handleCheckToken();
         history.push('/movies');
       })
-      .catch((err) => { console.log('Error', err); });
+      .catch((err) => { console.log('Error', err); })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
-  const handleRegister = (formData) => {
-    const email = formData.get('email');
-    const password = formData.get('password');
-    const userName = formData.get('name');
-
-    mainApi.register({
-      email, password, name: userName,
-    })
+  const handleRegister = (values) => {
+    setLoading(true);
+    mainApi.register(values)
       .then(() => {
-        handleLogin(formData);
+        handleLogin(values);
       })
-      .catch((err) => { console.log('Error', err); });
+      .catch((err) => { console.log('Error', err); })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const handleLogout = () => {
+    setLoading(true);
     mainApi.logout()
       .then(() => {
         setLoggedIn(false);
         setLoading(true);
+        setFilteredMovies([]);
+        setMovieQuery([]);
+        setShowShorts([]);
+        localStorage.clear();
         history.push('/');
       })
-      .catch((err) => { console.log('Error', err); });
+      .catch((err) => { console.log('Error', err); })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const handleUpdateUserInfo = (userInfo) => {
+    setLoading(true);
     mainApi.update(userInfo)
       .then((incomingUserInfo) => {
         setCurrentUser(incomingUserInfo);
       })
-      .catch((err) => { console.log('Error', err); });
+      .catch((err) => { console.log('Error', err); })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const getSavedMovies = () => {
-    mainApi.getSavedMovies()
-      .then((response) => {
-        setSavedMovies(response);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (loggedIn) {
+      mainApi.getSavedMovies()
+        .then((response) => {
+          setSavedMovies(response);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const handleToggleMovieSave = (movie, savedMovie) => {
@@ -186,6 +211,7 @@ const App = () => {
   const handleMoviesSearch = async (searchString) => {
     const filtered = filterMovies(movies, showShorts, searchString);
 
+    localStorage.setItem('user', JSON.stringify(currentUser));
     localStorage.setItem('movieQuery', searchString);
     localStorage.setItem('showShorts', showShorts);
     localStorage.setItem('filteredMovies', JSON.stringify(filtered));
@@ -240,6 +266,7 @@ const App = () => {
             onShortsCheck={handleSearchShorts}
             query={movieQuery}
             loading={loading}
+            moviesPerLine={moviesPerLine}
           />
 
           <ProtectedRoute

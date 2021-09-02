@@ -9,7 +9,7 @@ const MoviesCardList = ({ movies, savedMovies, onMovieButtonClick }) => (movies.
         <MoviesCard
           movie={movie}
           onClick={onMovieButtonClick}
-          key={movie.id}
+          key={movie.id || movie._id}
           savedMovies={savedMovies}
         />
       ))}

@@ -14,4 +14,14 @@
   &:hover {
     opacity: .8;
   }
+
+  &:disabled {
+    background-color: var(--secondaryBgColor);
+    color: var(--secondaryTextColor);
+    cursor: default;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
 }

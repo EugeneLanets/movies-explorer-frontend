@@ -11,7 +11,7 @@ import Navigation from './Navigation/Navigation';
 const Header = ({
   loggedIn, isSignPage, isMenuOpen, onMenuClick, loading,
 }) => (
-  <header className={`header${loading ? 'header_loading' : ''}`}>
+  <header className={`header${loading ? ' header_loading' : ''}`}>
     <div
       className={`container header__container ${isSignPage ? 'header__container_type_sign' : ''}`}
     >

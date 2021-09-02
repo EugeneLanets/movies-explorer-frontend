@@ -1,36 +1,49 @@
-/* eslint-disable no-restricted-syntax */
 import React from 'react';
 import './SignForm.scss';
 import SignFormField from './SignFormField/SignFormField';
 import SignFormFooter from './SignFormFooter/SignFormFooter';
 
 const SignForm = ({
-  title, text, linkText, linkTo, buttonText, children, formName, onSubmit,
-}) => {
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-
-    const formData = new FormData(evt.target);
-    onSubmit(formData);
-  };
-  return (
-    <form
-      className="sign-form"
-      name={formName}
-      onSubmit={handleSubmit}
-    >
-      <h1 className="sign-form__title">{title}</h1>
-      {children}
-      <SignFormField label="E-mail" inputType="email" fieldId="email" />
-      <SignFormField label="Пароль" inputType="password" fieldId="password" />
-      <SignFormFooter
-        text={text}
-        linkText={linkText}
-        linkTo={linkTo}
-        buttonText={buttonText}
-      />
-    </form>
-  );
-};
+  title, text, linkText, linkTo,
+  buttonText, children, formName,
+  onSubmit, fieldsValues, fieldsErrors,
+  formValidity, onFieldChange,
+}) => (
+  <form
+    className="sign-form"
+    name={formName}
+    noValidate
+    onSubmit={onSubmit}
+  >
+    <h1 className="sign-form__title">{title}</h1>
+    {children}
+    <SignFormField
+      label="E-mail"
+      inputType="email"
+      fieldId="email"
+      value={fieldsValues.email}
+      onChange={onFieldChange}
+      formValidity={formValidity}
+      errorMessage={fieldsErrors.email}
+    />
+    <SignFormField
+      label="Пароль"
+      inputType="password"
+      fieldId="password"
+      value={fieldsValues.password}
+      onChange={onFieldChange}
+      formValidity={formValidity}
+      errorMessage={fieldsErrors.password}
+      min="8"
+    />
+    <SignFormFooter
+      text={text}
+      linkText={linkText}
+      linkTo={linkTo}
+      buttonText={buttonText}
+      disabled={!formValidity}
+    />
+  </form>
+);
 
 export default SignForm;
