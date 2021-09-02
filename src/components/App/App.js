@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
 import './App.scss';
 import { useEffect, useState } from 'react';
 import {
@@ -101,7 +99,7 @@ const App = () => {
           history.push(location);
         }
       })
-      .catch((err) => { console.log('Error', err); })
+      .catch((err) => { console.log(err); })
       .finally(() => {
         setLoading(false);
       });
@@ -113,8 +111,8 @@ const App = () => {
     removeError(name);
     const { email, password } = values;
     mainApi.login({ email, password })
-      .then(async (res) => {
-        await handleCheckToken();
+      .then(() => {
+        handleCheckToken();
         history.push('/movies');
       })
       .catch((err) => {
@@ -153,7 +151,7 @@ const App = () => {
         localStorage.clear();
         history.push('/');
       })
-      .catch((err) => { console.log('Error', err); })
+      .catch((err) => { console.log(err); })
       .finally(() => {
         setLoading(false);
       });
@@ -165,7 +163,7 @@ const App = () => {
       .then((incomingUserInfo) => {
         setCurrentUser(incomingUserInfo);
       })
-      .catch((err) => { console.log('Error', err); })
+      .catch((err) => { console.log(err); })
       .finally(() => {
         setLoading(false);
       });
@@ -184,7 +182,6 @@ const App = () => {
   };
 
   const handleToggleMovieSave = (movie, savedMovie) => {
-    console.log(savedMovie);
     if (!savedMovie) {
       mainApi.saveMovie(movie)
         .then((resp) => {
