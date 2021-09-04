@@ -26,7 +26,6 @@ const Movies = ({
   useEffect(() => {
     setShownMoviesQuantity(startCardsQuantity);
   }, [startCardsQuantity]);
-
   return (
     <section className="movies section">
       <div className="container">

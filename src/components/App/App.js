@@ -64,9 +64,7 @@ const App = () => {
   };
 
   const checkMovies = (localMovies) => {
-    if (!localMovies) {
-      getMoviesFromRemote();
-    } else {
+    if (localMovies) {
       setMovies(localMovies);
     }
   };
@@ -147,7 +145,7 @@ const App = () => {
         setLoggedIn(false);
         setLoading(true);
         setFilteredMovies([]);
-        setMovieQuery([]);
+        setMovieQuery();
         setShowShorts(false);
         setMovies([]);
         localStorage.clear();
@@ -218,6 +216,12 @@ const App = () => {
   });
 
   const handleMoviesSearch = async (searchString) => {
+    const localMovies = localStorage.getItem('mvoies');
+
+    if (!localMovies) {
+      getMoviesFromRemote();
+    }
+
     const filtered = filterMovies(movies, showShorts, searchString);
 
     localStorage.setItem('user', JSON.stringify(currentUser));
