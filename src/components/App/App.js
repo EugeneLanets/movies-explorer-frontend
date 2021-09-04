@@ -111,8 +111,9 @@ const App = () => {
     removeError(name);
     const { email, password } = values;
     mainApi.login({ email, password })
-      .then(() => {
-        handleCheckToken();
+      .then(async () => {
+        setLoggedIn(true);
+        await handleCheckToken();
         history.push('/movies');
       })
       .catch((err) => {
@@ -147,7 +148,8 @@ const App = () => {
         setLoading(true);
         setFilteredMovies([]);
         setMovieQuery([]);
-        setShowShorts([]);
+        setShowShorts(false);
+        setMovies([]);
         localStorage.clear();
         history.push('/');
       })
