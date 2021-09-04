@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import './App.scss';
 import { useEffect, useState } from 'react';
 import {
@@ -22,6 +23,7 @@ import mainApi from '../../utils/API/mainApi';
 import movieApi from '../../utils/API/movieApi';
 import { SHORT_MOVIE_DURATION } from '../../utils/constants';
 import useErrors from '../../utils/hooks/useErrors';
+import Message from '../Message/Message';
 
 const App = () => {
   const history = useHistory();
@@ -30,7 +32,10 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [isMenuOpened, setMenuOpened] = useState(false);
 
-  const { errors, addError, removeError } = useErrors();
+  const {
+    errors, addError, removeError, clearErrors,
+  } = useErrors();
+  const [message, setMessage] = useState(null);
 
   const [currentUser, setCurrentUser] = useState({});
   const [movies, setMovies] = useState([]);
@@ -46,6 +51,10 @@ const App = () => {
 
   const handleMenuOpen = () => {
     setMenuOpened(!isMenuOpened);
+  };
+
+  const handleCloseMessage = () => {
+    setMessage(null);
   };
 
   const getMoviesFromRemote = () => {
@@ -159,9 +168,11 @@ const App = () => {
 
   const handleUpdateUserInfo = (userInfo) => {
     setLoading(true);
+    setMessage(false);
     mainApi.update(userInfo)
       .then((incomingUserInfo) => {
         setCurrentUser(incomingUserInfo);
+        setMessage('Информация успешно обновлена');
       })
       .catch((err) => { console.log(err); })
       .finally(() => {
@@ -239,10 +250,11 @@ const App = () => {
 
   useEffect(handleCheckToken, []);
   useEffect(getSavedMovies, [loggedIn]);
-
+  useEffect(clearErrors, [location]);
   return (
     <div className="app">
       <CurrentUserContext.Provider value={currentUser}>
+        {message && <Message message={message} onClose={handleCloseMessage} />}
         {!isNotFoundPage
           && (
           <Header

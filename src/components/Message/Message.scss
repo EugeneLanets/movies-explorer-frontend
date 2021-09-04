@@ -1,0 +1,21 @@
+.message {
+  box-sizing: border-box;
+  position: fixed;
+  padding: 15px 20px 10px;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 200px;
+  min-height: 50px;
+  border: 2px solid var(--accentColor);
+  border-radius: 7px;
+  background-color: #fff;
+  color: var(--pageColor);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &_error {
+    border-color: var(--errorColor);
+  }
+}

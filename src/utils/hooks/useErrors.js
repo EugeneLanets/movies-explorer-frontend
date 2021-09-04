@@ -11,7 +11,11 @@ export default function useErrors() {
     setErrors({ ...errors, [name]: undefined });
   };
 
+  const clearErrors = () => {
+    setErrors({});
+  };
+
   return {
-    errors, addError, removeError,
+    errors, addError, removeError, clearErrors,
   };
 }
