@@ -38,10 +38,30 @@
     font-weight: 500;
     font-size: 11px;
     line-height: 13px;
-    padding: 12px 0;
+    padding: 12px 0 15px;
+    flex-wrap: wrap;
+    position: relative;
 
     &:last-of-type {
       border-top: 1px solid var(--borderColor);
+
+      & > .profile__error_active {
+        bottom: -20px;
+      }
+    }
+  }
+
+  &__error {
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    color: var(--errorColor);
+    margin: 0;
+    align-self: center;
+    display: none;
+
+    &_active {
+      display: block;
     }
   }
 
@@ -89,6 +109,11 @@
     &:hover {
       cursor: pointer;
       opacity: .8;
+    }
+
+    &:disabled {
+      opacity: .5;
+      cursor: default;
     }
   }
 }

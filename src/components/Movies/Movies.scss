@@ -24,6 +24,10 @@
       grid-template-columns: repeat(auto-fill, 300px);
       row-gap: 16px;
       justify-content: center;
+
+      &-item {
+        display: flex;
+      }
     }
   }
 
@@ -33,19 +37,31 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    height: 100%;
     max-width: 364px;
     align-self: center;
-    
+
+    &-link {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+
+      &:hover {
+        opacity: .8;
+      }
+    }
+
     &-header {
+      flex-grow: 1;
       display: grid;
       padding: 14px;
       gap: 10px;
-      grid-template-areas: 
+      grid-template-areas:
       "title button"
       "duration button";
       grid-template-columns: 1fr 30px;
     }
-    
+
     &-title {
       grid-area: title;
       font-weight: 500;
@@ -75,15 +91,18 @@
       cursor: pointer;
       align-self: center;
       transition: .3s;
+      position: relative;
+      z-index: 3;
+
 
       &:hover {
         opacity: .8;
       }
-      
+
       &_active {
         background-color: var(--accentColor);
       }
-      
+
     }
 
     &-icon {
@@ -107,10 +126,20 @@
     }
 
     &-cover {
-      width: 100%;
-      height: auto;
-      object-fit: contain;
-      object-position: center;
+      width: 364px;
+      height: 203px;
+      object-fit: cover;
+      object-position: top left;
+
+      @media  all and (max-width: 1279px) {
+        width: 339px;
+        height: 190px;
+      }
+
+      @media  all and (max-width: 767px) {
+        width: 300px;
+        height: 168px;
+      }
     }
   }
 

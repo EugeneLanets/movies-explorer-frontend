@@ -3,6 +3,11 @@
   padding: 18px 0;
   z-index: 1;
 
+  &_loading {
+    opacity: 0.8;
+  }
+
+
   &__container {
     flex-direction: row;
     align-items: center;

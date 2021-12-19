@@ -2,21 +2,18 @@ import React from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.scss';
 
-const MoviesCardList = () => (
-  <ul className="movies__card-list">
-    <MoviesCard saved />
-    <MoviesCard />
-    <MoviesCard saved />
-    <MoviesCard />
-    <MoviesCard />
-    <MoviesCard saved />
-    <MoviesCard />
-    <MoviesCard saved />
-    <MoviesCard />
-    <MoviesCard />
-    <MoviesCard />
-    <MoviesCard />
-  </ul>
-);
-
+const MoviesCardList = ({ movies, savedMovies, onMovieButtonClick }) => (movies.length !== 0
+  ? (
+    <ul className="movies__card-list">
+      {movies.map((movie) => (
+        <MoviesCard
+          movie={movie}
+          onClick={onMovieButtonClick}
+          key={movie.id || movie._id}
+          savedMovies={savedMovies}
+        />
+      ))}
+    </ul>
+  )
+  : (<p>Ничего не найдено</p>));
 export default MoviesCardList;

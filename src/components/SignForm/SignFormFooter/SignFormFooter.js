@@ -4,10 +4,11 @@ import Button from '../../Button/Button';
 import './SignFormFooter.scss';
 
 const SignFormFooter = ({
-  text, linkText, linkTo, buttonText,
+  text, linkText, linkTo, buttonText, disabled, error,
 }) => (
   <footer className="sign-form__footer">
-    <Button text={buttonText} className="sign-form__button" />
+    <p className="sign-form__error">{error}</p>
+    <Button text={buttonText} className="sign-form__button" disabled={disabled} />
     <p className="sign-form__paragraph sign-form__text">
       {text}
       <Link to={linkTo} className="sign-form__link">{linkText}</Link>

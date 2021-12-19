@@ -11,7 +11,7 @@
   @media  all and (max-width: 1279px) {
     padding-bottom: 232px;
   }
-  
+
   @media  all and (max-width: 767px) {
     padding: 32px 30px 30px;
     width: 100%;
@@ -29,6 +29,22 @@
     margin-top: auto;
     display: flex;
     flex-direction: column;
+  }
+
+  &__error {
+    align-self: center;
+    font-weight: 400;
+    color: var(--errorColor);
+
+    font-size: 14px;
+    line-height: 17px;
+
+
+
+    @media  all and (max-width: 767px) {
+      font-size: 12px;
+      line-height: 15px;
+    }
   }
 
   &__text {
